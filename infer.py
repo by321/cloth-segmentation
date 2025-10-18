@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import torch
-import torch.nn.functional as F
+#import torch.nn.functional as F
 import torchvision.transforms as transforms
 
 from data.base_dataset import Normalize_image
@@ -70,8 +70,8 @@ for image_name in images_list:
     image_tensor = torch.unsqueeze(image_tensor, 0)
 
     output_tensor = net(image_tensor.to(device))
-    output_tensor = F.log_softmax(output_tensor[0], dim=1)
-    output_tensor = torch.max(output_tensor, dim=1, keepdim=True)[1]
+    #output_tensor = F.log_softmax(output_tensor[0], dim=1)
+    output_tensor = torch.max(output_tensor[0], dim=1, keepdim=True)[1]
     output_tensor = torch.squeeze(output_tensor, dim=0)
     output_tensor = torch.squeeze(output_tensor, dim=0)
     output_arr = output_tensor.cpu().numpy()
@@ -82,5 +82,6 @@ for image_name in images_list:
     output_img.save(os.path.join(result_dir, image_name[:-3] + "png"))
 
     pbar.update(1)
+
 
 pbar.close()
